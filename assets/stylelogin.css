@@ -16,12 +16,17 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	/* margin: 0; */
+	margin: 0;
 	padding: 0;
 	border: 0;
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	text-decoration: none;
+	color: black;
+	&:hover {
+		color: #B1663C;
+	}
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -48,36 +53,31 @@ table {
 }
 /** end reset css**/
 html {
-	background-color: #FFFEF8;
+	background: rgba(255, 254, 248, 1);
 }
 body {
-	/* max-width: 1140px; */
-	/* margin:auto; */
-	font-family: 'Work Sans';
+	max-width: 1140px;
+	margin:auto;
+	font-family: 'Work Sans' ;
 	font-size: 14px;
-	/* position: relative; */
+	/*position: relative;
 	padding-bottom: 60px;
-	min-height: 88vh;
+	min-height: 88vh;*/
 }
 
 header {
 	display: flex;
 	justify-content: space-between;
-	/* margin: 50px 0; */
-	width: 1140px;
-	position: relative;
-	/* left: 150px; */
-	margin: auto;
-	top: 50px;
+	margin: 50px 0
 }
 section {
 	margin: 50px 0
 }
-footer {
+/*footer {
 	position: absolute;
 	width: 100%;
 	bottom: 0;
-}
+}*/
 
 h1{
 	display: flex;
@@ -236,25 +236,22 @@ input[type="submit"]{
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	/* margin: 2em; */
-	background-color: none;
+	margin: 2em;
+	/*background-color: none;
 	height: 60px;
-	/* top: 3372px; */
+	top: 3372px;
 	gap: 0px;
 	color: black;
 	margin-bottom: 0;
 	padding-bottom: 0;
-	background-color: white;
-	padding-right: 100px;
+	background-color: white;*/
 }
 
 /***** login *****/
 #login {
-	position: relative;
-	width: 30%;
-	/* padding-top: 150px; */
+	width: 50%;
+	padding-top: 150px;
 	margin: auto;
-	top: 338px;
 }
 
 .title_login {
@@ -296,6 +293,10 @@ footer nav ul {
 	font-weight: 500;
 	line-height: 16.42px;
 	margin: auto;
-	
 }
+.error-message {
+	color: red;
+}
+
+
 

@@ -1,113 +1,110 @@
 document.addEventListener("DOMContentLoaded", async function() {
-    /**** DOMcontentLoaded pour m'assurer que le DOM est completement chargé avant
-      d'exécuter le script*/
-    /**** recuperer ma div avec sa classe gallery */
-    const gallery = document.querySelector(".gallery"); 
-    console.log(gallery);
+    /***** Sélectionne l'élément HTML avec la classe "gallery" */
+    const gallery = document.querySelector(".gallery");
 
-    /**** retourner le tableau des mes Apiworks */
+    /***** Sélectionne l'élément HTML avec la classe "filters" */
+    const filters = document.querySelector(".filters");
+
+    /***** Fonction pour récupérer les "works" depuis l'API */
     async function getApiWorks() {
         const response = await fetch("http://localhost:5678/api/works");
         return await response.json();
     }
+    console.log(getApiWorks);
 
-    /***** affichage des APiWorks dans le DOM */
-    async function showApiWorks(arrayApiWorks) {
-        
-        /***** vérification conditionnelle qui permet de s'assurer que la variable gallery a bien été assignée
-         à un élément DOM avant d'essayer de l'utiliser */
-        if (!gallery) {
-            console.error("Gallery element not found.");
-            return;
-        }
-        arrayApiWorks.forEach((work) => {
-            /***** creation des elements */
-            const figure = document.createElement("figure");
-            const img = document.createElement("img");
-            const figcaption = document.createElement("figcaption");
-            /**** definir la source des mes images et le texte  */
-            img.src = work.imageUrl;
-            figcaption.textContent = work.title;
-            /***** definir le parent et les enfants */
-            figure.appendChild(img);
-            figure.appendChild(figcaption);
-            gallery.appendChild(figure);
-        });
-        console.log(arrayApiWorks);
-    }
-
-    /***** appeler ma function showApiworks pour garantit que le script s'exécute correctement et sans erreurs. 
-     * Cela assure également une structure de code claire et organisée, facilitant la maintenance et la compréhension du code. */
-    const arrayApiWorks = await getApiWorks();
-    console.log(arrayApiWorks);
-    await showApiWorks(arrayApiWorks);
-
-    const filters = document.querySelector(".filters");
-    console.log(filters);
-
+    /***** Fonction pour récupérer les "categories" depuis l'API */
     async function getApiCategories() {
-        /**** creer le boutton dans le DOM */
         const response = await fetch("http://localhost:5678/api/categories");
         return await response.json();
     }
+    console.log(getApiCategories);
 
-    function createButton(name, categoryId, isSelected) { 
-        /***** creer le button dans le DOM */
-        const buttonElement = document.createElement("button");
-        /***** j'ajoute la classe button */
-        buttonElement.classList.add("button");
-        buttonElement.innerText = name;
-        if (isSelected) {
-            buttonElement.classList.add("button_selected");
-        }
-        filters.appendChild(buttonElement);
-        /***** j'ajoute la funtion button click pour donner l'apparence selectionné au button que je click */
-        buttonElement.addEventListener("click", function (event) {
-            switchColor(event.target);
-            displayWorks(categoryId);
+    /***** Fonction pour afficher les "works" dans la galerie */
+    function showApiWorks(arrayApiWorks) {
+        /***** Efface le contenu actuel de la galerie */
+        gallery.innerHTML = "";
+        
+        /***** Pour chaque work dans le tableau arrayApiWorks */
+        arrayApiWorks.forEach((work) => {
+            // Crée les éléments HTML pour chaque work
+            const figureEL = document.createElement("figure");
+            const imgEL = document.createElement("img");
+            const figcaption = document.createElement("figcaption");
+            console.log(figureEL, imgEL, figcaption);
+
+            // Définit la source de l'image et le texte de la légende
+            imgEL.src = work.imageUrl;
+            figcaption.textContent = work.title;
+
+            // Ajoute l'image et la légende à la figure
+            figureEL.appendChild(imgEL);
+            figureEL.appendChild(figcaption);
+
+            // Ajoute la figure à la galerie
+            gallery.appendChild(figureEL);
+        });
+    }console.log(showApiWorks);
+
+    /***** Fonction pour créer un bouton de filtre */
+    function createButton(name, categoryId) {
+        /**** Crée un élément bouton et ajout la classe button */
+        const button = document.createElement("button");
+        button.classList.add("button");
+
+        /***** Définir le texte du bouton */
+        button.innerText = name;
+
+        /**** Ajoute le bouton aux filtres */
+        filters.appendChild(button);
+
+        /***** Ajoute un écouteur d'événement pour le clic */
+        button.addEventListener("click", async () => {
+            /***** Retirer la classe "button_selected" de tous les boutons et l'ajouter au buton cliqué */
+            document.querySelectorAll(".filters button").forEach(btn => btn.classList.remove("button_selected"));
+            button.classList.add("button_selected");
+
+            /***** Affiche dans la console l'ID de la catégorie cliquée */
+            /***console.log(categoryId);*/
+
+            /**** Récupèrer les works depuis l'API */
+            const works = await getApiWorks();
+
+            /***** Filtre les works en fonction de la catégorie cliquée */
+            /*****Si aucune catégorie spécifique n'est sélectionnée, affiche tous les 'works'. 
+             * Sinon, affiche seulement les 'works' qui appartiennent à la catégorie sélectionnée." */
+            const selectedWorks = categoryId === undefined ? works : works.filter(work => work.categoryId === categoryId);
+            console.log(categoryId, selectedWorks);
+
+            /***** Affiche les works filtrés dans la galerie */
+            showApiWorks(selectedWorks);
         });
     }
-      /***** je gere le changmt de classe des buttons lorsque on clique dessus */
-    function switchColor(target) {
-        const buttons = filters.querySelectorAll("button");
-        /***** je suprime la classe selected sur les boutons */
-        buttons.forEach(button => button.classList.remove("button_selected"));
-        /***** et je l'ajoute au button selectioné */
-        target.classList.add("button_selected");
-    }
-     /***** pour afficher l'ensemble de projets en le filtrant avec la categoryId */
-    function displayWorks(categoryId) {
-        gallery.innerHTML = "";/***** pour effacer le contenu de la gallery */
-        const filteredWorks = filterWorks(categoryId);
-           
 
-            showApiWorks(filteredWorks);
-    }
-    /***** filtrage en fonction d ela numero de categorie indique */
-    function filterWorks(categoryId) {
-        let filteredWorks;
-        if (categoryId === undefined) { /***** si le categoryid n'est pas defini, affiche mon tableau */
-            filteredWorks = arrayApiWorks;
-        } else { /***** if not, affiche le tableau filtré  */
-            filteredWorks = arrayApiWorks.filter(function (work) {
-                return categoryId === work.categoryId;
-            });
-        }
-        return filteredWorks;
-    }
+    /***** Fonction pour afficher les filtres */
+    async function displayFilters() {
+        /***** ma fucntion pour creer un bouton "Tous" pour afficher tous les works */
+        /***** avec la valeur undefined pour l'id de categorie */
+        createButton("Tous", undefined);
+        /***** Sélectionne le bouton "Tous" par défaut */
+        document.querySelector(".filters button").classList.add("button_selected");
 
-    async function displayFilters() { /**** avec asynchrone pour m'assurer que les cat sont recuperées 
-    avant de creer les buttons de filtre */
-        /***** j'ajoute un button tous */
-        createButton("Tous", undefined, true);
-        /***** je recuper le tableau de categoories uniques */
+        /***** Récupère les catégories depuis l'API */
+        /***** ma variable categories contient mon tableau des cat recuperees */
         const categories = await getApiCategories();
-        /***** a chaque tour de boucle j'ajoute un button au nom de la categorie */
-        for (let category of categories) {
-            createButton(category.name, category.id, false);
-        }
+
+        /***** Pour chaque catégorie, crée un bouton avec le nom de la categorie et l'id de la cat
+         * pour creer un button avec le nom corespondant
+        */
+        categories.forEach(category => createButton(category.name, category.id));
+        console.log(categories);
+        
     }
 
-    await displayFilters(); /***** appeler la fonction avec await pour m'assurer qu'elle attend
-    la recuperation de categories avant de continuer */
+    /***** Affiche les filtres */
+    await displayFilters();
+
+    /***** Affiche tous les works par défaut */
+    const works = await getApiWorks();
+    showApiWorks(works);
+    console.log(works);
 });

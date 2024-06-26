@@ -1,44 +1,42 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const form = document.querySelector('form');
-    console.log(form);
-    const emailInput = document.getElementById('email');
-    console.log(emailInput);
-    const passInput = document.getElementById('passwrd');
-    console.log(passInput);
+    const form = document.querySelector("form");
+    const emailInput = document.getElementById("email");
+    const passInput = document.getElementById("passwrd");
+    const errorMessage = document.querySelector("p");
+   
+
+    function error() {
+        errorMessage.innerHTML = "User unkwon, please try again 🤪";
+        errorMessage.classList.add("error-message");
+    };
+
+    const myLoginApi = "http://localhost:5678/api/users/login";
 
     form.addEventListener('submit', async function(event) {
         event.preventDefault(); /***** Empêche le rechargement de la page lors de la soumission du formulaire */
 
         /**** Mes valeurs saisies par l'utilisateur */
-        const myemail = emailInput.value;
-        const mypassword = passInput.value;
+        const email = emailInput.value;
+        const password = passInput.value;
 
-        async function myLogin() {
-            const response = await fetch('http://localhost:5678/api/users/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email: myemail, password: mypassword }) /*****convertir en json avec la function jsaon.stringify */
-            });
+       
+        const response = await fetch(myLoginApi, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: email, password: password }) /***** Convertir en JSON */
+        });
 
-            if (response.ok) {
-                const data = await response.json();
-                const token = data.token;
-                localStorage.setItem('authToken', token); /***** Stocker le token dans localStorage */
-                return true;
-            } else {
-                return false;
-            }
-        }
+        
 
-        const loginSuccessful = await myLogin();
-
-        /***** Si la connexion est réussie, rediriger vers index.html, sinon afficher un message d'erreur */
-        if (loginSuccessful) {
-            document.location.href = "index.html";
+        /***** Si la connexion est réussie, rediriger vers index.html*/
+        if (response.status === 200) {
+            const data = await response.json();
+            const token = data.token;
+            localStorage.setItem("token", token);
+            window.location.href = "./index.html";
+         /**** if not affiche mon message d'erreur */
         } else {
-            alert('try again');
+            error();
         }
     });
 });
