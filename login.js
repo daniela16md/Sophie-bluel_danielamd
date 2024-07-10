@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
    
 
     function error() {
-        errorMessage.innerHTML = "User unkwon, please try again 🤪";
+        errorMessage.innerHTML = "User unkwon, please try again ";
         errorMessage.classList.add("error-message");
     };
 

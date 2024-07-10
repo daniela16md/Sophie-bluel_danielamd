@@ -52,9 +52,9 @@ table {
 	border-spacing: 0;
 }
 /** end reset css**/
-html {
+/*html {
 	background: rgba(255, 254, 248, 1);
-}
+}*/
 body {
 	max-width: 1140px;
 	margin:auto;
@@ -109,6 +109,14 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+}
+nav a {
+	text-decoration: none;
+	color: #000;
+	&:hover{
+		color: #000;
+		font-weight: 700;
+	}
 }
 
 li:hover {
@@ -308,3 +316,310 @@ footer nav ul {
 }
 
 
+
+/***** banner *****/
+
+.edit_mode {
+	width: 100%;
+	background-color: #000;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	font-family: work sans;
+	padding: 10px;
+}
+
+.edit_mode p,
+.edit_mode i{
+	color: white;
+	text-align: center;
+	font-size: 14px;
+	font-weight: 400;
+	cursor: pointer;
+	padding: 5px;
+}
+.edit_mode button {
+	width: 216px;
+	height: 38px;
+	&:hover {
+		opacity: 0.9;
+	}
+}
+
+
+/****** modal  *****/
+.divprojets {
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+}
+
+.divprojets i {
+	width: 15.58px;
+	height: 15.58px;
+	margin-top: 10px;
+}
+
+.divprojets p {
+	font-size: 14px;
+	margin-top: 10px;
+	cursor: pointer;
+	margin-left: 10px;
+}
+
+.divprojetsdiv {
+	animation-timing-function: ease-out;
+	animation-duration: 300ms;
+}
+
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	box-sizing: border-box;
+	display: none; /* Hide the modal by default */
+	align-items: center;
+	justify-content: center;
+}
+
+.modalView,
+.modal2 {
+	background-color: white;
+	width: 630px;
+	max-width: calc(100vw - 20px);
+	max-height: calc(100vh - 20px);
+	overflow: auto;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	box-sizing: border-box;
+	border-radius: 10px;
+}
+
+.modalView .fa-xmark {
+	position: absolute;
+	top: 30px;
+	right: 36px;
+	text-align: right;
+	font-size: 20px;
+	width: 16px;
+	cursor: pointer;
+}
+
+.modalView h3 {
+	text-align: center;
+	font-size: 26px;
+	margin-top: 60px;
+}
+.mymodalphotodiv {
+    box-sizing: border-box;
+    padding: 50px 70px 0 70px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: auto;
+    gap: 8px;
+}
+.mymodalphotodiv img {
+    width: 100%;
+    height: 112px;
+    position: relative;
+}
+.pictureelementdiv {
+    position: relative;
+}
+.trash-icon {
+	position: absolute;
+	width: 9px;
+	height: 11px;
+    color: white;
+    background-color: black; 
+    padding: 5px;
+    cursor: pointer;
+	top: 10px;
+	right: 8px;
+	
+}
+
+
+.mymodalphotodiv i {
+	text-align: center;
+	color: white;
+	background-color: black;
+	width: 16px;
+	height: 16px;
+	padding-top: 3px;
+	box-sizing: border-box;
+}
+
+.mymodalphotodiv .fa-up-down-left-right {
+	opacity: 1;
+}
+
+.fa-up-down-left-right:hover {
+	opacity: 1;
+}
+
+.mymodalphotodiv .fa-trash-can {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+}
+
+.mymodalphotodiv p {
+	font-size: 12px;
+}
+
+.border {
+	width: 75%;
+	margin: auto;
+	border-bottom: 1px solid black;
+	margin-top: 40px;
+}
+
+.mymodalbutton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	background-color: #1D6154;
+	color: white;
+	font-size: 14px;
+	font-family: "syne";
+	border-radius: 60px;
+	border: none;
+	margin: auto;
+	margin-top: 36px;
+	width: 40%;
+	height: 36px;
+	cursor: pointer;
+}
+
+.mymodalbutton:hover {
+	background-color: #0E2F28;
+	transition: 300ms ease;
+}
+
+.removemymodal {
+	border: none;
+	font-family: "syne";
+	background-color: white;
+	color: #d65353;
+	margin: 24px;
+	cursor: pointer;
+}
+
+
+
+.aformModal {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 36px;
+}
+
+.addBox {
+	background-color: #E8F1F6;
+	border-radius: 3px;
+	height: 170px;
+	width: 75%;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+}
+
+.addBox p {
+	font-size: 10px;
+	margin-top: 4px;
+}
+
+.inputCtn {
+	display: flex;
+	flex-direction: column;
+	width: 75%;
+}
+
+.fa-arrow-left {
+	font-size: 20px;
+	text-align: left;
+	cursor: pointer;
+	width: 16px;
+	position: absolute;
+	top: 30px;
+	left: 36px;
+}
+
+.fa-image {
+	margin: 20px;
+	font-size: 56px;
+	color: rgb(189, 187, 187);
+	background-color: #E8F1F6;
+}
+
+.addImgbutton {
+	height: 36px;
+	width: 173px;
+	text-align: center;
+	background-color: #CBD6DC;
+	color: #306685;
+	font-size: 14px;
+	border-radius: 50px;
+	border: none;
+	cursor: pointer;
+}
+
+.inputFileBtn {
+	opacity: 0;
+	position: absolute;
+	bottom: 40px;
+	cursor: pointer;
+	height: 36px;
+}
+
+#photoPreview {
+	position: absolute;
+	height: 170px;
+}
+
+form label {
+	margin-top: 24px;
+	margin-bottom: 10px;
+}
+
+#Title,
+#category {
+	width: 100%;
+	box-sizing: border-box;
+	height: 50px;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	border: none;
+	padding-left: 20px;
+}
+
+.formSubmitButton {
+	height: 36px;
+	width: 173px;
+	text-align: center;
+	background-color: #A7A7A7;
+	color: white;
+	font-size: 14px;
+	font-family: "syne";
+	font-weight: 700;
+	border-radius: 60px;
+	border: none;
+	cursor: pointer;
+	margin-top: 32px;
+	margin-bottom: 32px;
+}
+
+.sendForm {
+	background-color: #1D6154;
+	
+}
